@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GERM/JWST 556 – Language Remains | UNC Chapel Hill</title>
+  <style>
+    :root {
+      --blue-dark:  #1a3a5c;
+      --blue-mid:   #2a5a8c;
+      --blue-light: #c5dced;
+      --red:        #c0392b;
+      --red-dark:   #962d22;
+      --white:      #ffffff;
+      --off-white:  #f7f9fb;
+      --gray:       #555;
+      --shadow:     0 4px 24px rgba(0,0,0,0.10);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: Georgia, 'Times New Roman', serif;
+      color: var(--blue-dark);
+      background: var(--white);
+      line-height: 1.65;
+    }
+
+    /* ── NAV ───────────────────────────────────────────── */
+    nav {
+      background: var(--blue-dark);
+      padding: .9rem 2rem;
+      position: sticky; top: 0; z-index: 200;
+      display: flex; justify-content: space-between; align-items: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,.35);
+    }
+    .nav-brand { color: #fff; font-family: Arial, sans-serif; font-size: .85rem; letter-spacing: 1px; }
+    .nav-brand span { color: var(--blue-light); }
+    nav ul { list-style: none; display: flex; gap: 1.8rem; }
+    nav ul a {
+      color: #fff; text-decoration: none;
+      font-family: Arial, sans-serif; font-size: .8rem; letter-spacing: .5px;
+      transition: color .25s;
+    }
+    nav ul a:hover { color: var(--blue-light); }
+
+    /* ── HERO ──────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(140deg, var(--blue-dark) 0%, var(--blue-mid) 55%, #4a82b4 100%);
+      color: #fff;
+      padding: 6rem 2rem 5rem;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        45deg, transparent, transparent 40px,
+        rgba(255,255,255,.015) 40px, rgba(255,255,255,.015) 80px
+      );
+      pointer-events: none;
+    }
+    .semester-badge {
+      display: inline-block;
+      background: var(--red); color: #fff;
+      padding: .35rem 1.1rem; border-radius: 20px;
+      font-family: Arial, sans-serif; font-size: .75rem;
+      letter-spacing: 2px; text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+    .hero-code {
+      font-family: Arial, sans-serif; font-size: .95rem;
+      letter-spacing: 4px; color: var(--blue-light);
+      text-transform: uppercase; margin-bottom: .9rem;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.6rem);
+      line-height: 1.12; margin-bottom: .5rem;
+      text-shadow: 2px 2px 10px rgba(0,0,0,.3);
+    }
+    .hero h1 em { font-style: italic; color: var(--blue-light); }
+    .hero-sub {
+      font-size: 1.15rem; color: rgba(255,255,255,.75);
+      font-style: italic; margin-bottom: 2rem;
+    }
+    .hero-quote {
+      max-width: 680px; margin: 0 auto 2.5rem;
+      font-size: 1.05rem; font-style: italic; color: rgba(255,255,255,.85);
+      border-left: 3px solid var(--red); padding-left: 1.4rem; text-align: left;
+    }
+    .hero-quote cite {
+      display: block; font-style: normal; font-size: .8rem;
+      color: var(--blue-light); margin-top: .5rem;
+      font-family: Arial, sans-serif; letter-spacing: 1px;
+    }
+
+    .meta-strip {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem;
+      max-width: 860px; margin: 0 auto 2.5rem;
+    }
+    .meta-chip {
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 10px; padding: .85rem 1.4rem;
+      text-align: center; backdrop-filter: blur(6px);
+    }
+    .meta-chip .lbl {
+      display: block; font-family: Arial, sans-serif;
+      font-size: .65rem; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--blue-light); margin-bottom: .25rem;
+    }
+    .meta-chip .val { font-size: .95rem; font-weight: bold; }
+
+    .cta-row { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-block; padding: .85rem 2.4rem; border-radius: 28px;
+      font-family: Arial, sans-serif; font-weight: bold; font-size: .95rem;
+      letter-spacing: .8px; text-decoration: none; transition: all .3s;
+    }
+    .btn-red {
+      background: var(--red); color: #fff;
+      box-shadow: 0 4px 16px rgba(192,57,43,.45);
+    }
+    .btn-red:hover { background: var(--red-dark); transform: translateY(-2px); }
+    .btn-outline {
+      border: 2px solid rgba(255,255,255,.6); color: #fff; background: transparent;
+    }
+    .btn-outline:hover { background: rgba(255,255,255,.1); border-color: #fff; transform: translateY(-2px); }
+    .btn-white {
+      background: #fff; color: var(--red);
+      box-shadow: 0 4px 20px rgba(0,0,0,.2);
+    }
+    .btn-white:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,.25); }
+
+    /* ── AUTHORS BANNER ───────────────────────────────── */
+    .authors-wrap {
+      background: var(--blue-light);
+      padding: 3.5rem 2rem; text-align: center;
+    }
+    .authors-wrap h2 {
+      font-family: Arial, sans-serif; font-size: .75rem;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--blue-dark); opacity: .65; margin-bottom: 2rem;
+    }
+    .authors-grid {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 1.2rem;
+      max-width: 1000px; margin: 0 auto;
+    }
+    .author-card {
+      background: #fff; border-radius: 14px; padding: 1.2rem .9rem;
+      width: 110px; box-shadow: var(--shadow);
+      border-top: 3px solid var(--blue-dark);
+      transition: transform .3s, box-shadow .3s;
+    }
+    .author-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,.15); }
+    .author-card:nth-child(2n)   { border-top-color: var(--red); }
+    .author-card:nth-child(3n)   { border-top-color: var(--blue-mid); }
+    .author-card:nth-child(5n)   { border-top-color: #27ae60; }
+    .a-avatar {
+      width: 54px; height: 54px; border-radius: 50%;
+      background: var(--blue-dark);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 1.3rem; font-weight: bold;
+      margin: 0 auto .7rem;
+    }
+    .author-card:nth-child(2n) .a-avatar { background: var(--red); }
+    .author-card:nth-child(3n) .a-avatar { background: var(--blue-mid); }
+    .author-card:nth-child(5n) .a-avatar { background: #27ae60; }
+    .a-name { font-size: .72rem; font-weight: bold; text-align: center; line-height: 1.3; }
+    .a-dates { font-size: .62rem; color: var(--gray); font-family: Arial, sans-serif; text-align: center; margin-top: .15rem; }
+
+    /* ── SHARED SECTION STYLES ──────────────────────── */
+    .section { padding: 5rem 2rem; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .eyebrow {
+      font-family: Arial, sans-serif; font-size: .72rem;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--red); margin-bottom: .65rem;
+    }
+    h2.section-h { font-size: clamp(1.6rem, 3vw, 2.2rem); color: var(--blue-dark); margin-bottom: 1.2rem; }
+    .divider { width: 52px; height: 4px; background: var(--red); border-radius: 2px; margin-bottom: 1.8rem; }
+
+    /* ── ABOUT ──────────────────────────────────────── */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .about-text p { margin-bottom: 1.1rem; color: #333; font-size: 1.02rem; }
+    .pill {
+      display: inline-block; padding: .25rem .85rem; border-radius: 12px;
+      font-family: Arial, sans-serif; font-size: .72rem; font-weight: bold;
+      letter-spacing: .4px; margin-right: .4rem; margin-top: .3rem;
+    }
+    .pill-green  { background: #27ae60; color: #fff; }
+    .pill-blue   { background: var(--blue-dark); color: #fff; }
+    .pill-mid    { background: var(--blue-mid); color: #fff; }
+
+    .dark-box {
+      background: var(--blue-dark); color: #fff;
+      border-radius: 16px; padding: 2.4rem 2rem; box-shadow: var(--shadow);
+    }
+    .dark-box h3 {
+      font-family: Arial, sans-serif; font-size: 1rem;
+      letter-spacing: 1px; color: var(--blue-light); margin-bottom: 1.3rem;
+    }
+    .dark-box ul { list-style: none; }
+    .dark-box ul li {
+      padding: .6rem 0; border-bottom: 1px solid rgba(255,255,255,.1);
+      font-size: .93rem; display: flex; gap: .7rem; align-items: flex-start;
+    }
+    .dark-box ul li:last-child { border-bottom: none; }
+    .dark-box ul li::before { content: '→'; color: var(--red); flex-shrink: 0; }
+
+    /* ── WHY TAKE THIS COURSE ───────────────────────── */
+    .features-bg { background: var(--off-white); }
+    .features-grid {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem;
+      margin-top: 2.8rem;
+    }
+    .feat {
+      background: #fff; border-radius: 16px; padding: 2rem;
+      box-shadow: var(--shadow); border-bottom: 4px solid var(--blue-dark);
+      transition: transform .3s;
+    }
+    .feat:hover { transform: translateY(-4px); }
+    .feat:nth-child(2) { border-bottom-color: var(--red); }
+    .feat:nth-child(3) { border-bottom-color: var(--blue-mid); }
+    .feat:nth-child(4) { border-bottom-color: #27ae60; }
+    .feat:nth-child(5) { border-bottom-color: var(--red); }
+    .feat:nth-child(6) { border-bottom-color: var(--blue-mid); }
+    .feat-icon { font-size: 2.2rem; margin-bottom: .9rem; }
+    .feat h3 { font-size: 1.05rem; color: var(--blue-dark); margin-bottom: .6rem; }
+    .feat p  { font-size: .88rem; color: var(--gray); line-height: 1.6; }
+
+    /* ── TOPICS ─────────────────────────────────────── */
+    .topics-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: .9rem; margin-top: 2.4rem;
+    }
+    .topic {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1rem 1.3rem; background: var(--off-white);
+      border-radius: 10px; border-left: 4px solid var(--blue-dark);
+      transition: background .2s, transform .2s;
+    }
+    .topic:hover { background: var(--blue-light); transform: translateX(4px); }
+    .t-num { font-family: Arial, sans-serif; font-size: .72rem; font-weight: bold; color: var(--gray); min-width: 22px; }
+    .t-name { font-size: .92rem; color: var(--blue-dark); font-weight: bold; }
+
+    /* ── TESTIMONIALS ───────────────────────────────── */
+    .testimonials-bg {
+      background: linear-gradient(140deg, var(--blue-dark), var(--blue-mid));
+      padding: 5rem 2rem; color: #fff;
+    }
+    .testimonials-bg .eyebrow { color: var(--blue-light); }
+    .testimonials-bg h2.section-h { color: #fff; }
+    .testimonials-bg .divider { background: var(--blue-light); }
+    .t-sub { color: rgba(255,255,255,.6); font-family: Arial, sans-serif; font-size: .88rem; margin-bottom: 2.8rem; }
+
+    .quotes-grid {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 1.4rem;
+      max-width: 1100px; margin: 0 auto;
+    }
+    .q-card {
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 16px; padding: 2rem 1.8rem;
+      position: relative; transition: background .3s, transform .3s;
+      backdrop-filter: blur(6px);
+    }
+    .q-card:hover { background: rgba(255,255,255,.14); transform: translateY(-3px); }
+    .q-card::before {
+      content: '"';
+      position: absolute; top: -.4rem; left: 1.5rem;
+      font-size: 5rem; line-height: 1;
+      color: var(--red); font-family: Georgia, serif; opacity: .8;
+    }
+    .q-card blockquote {
+      font-size: .95rem; line-height: 1.75;
+      color: rgba(255,255,255,.88); font-style: italic;
+      margin-top: 1.6rem;
+    }
+    .q-source {
+      margin-top: 1.1rem; font-family: Arial, sans-serif; font-size: .7rem;
+      letter-spacing: 1px; color: var(--blue-light); text-transform: uppercase;
+    }
+
+    /* ── DETAILS ────────────────────────────────────── */
+    .details-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 2.5rem;
+    }
+    .d-block h3 {
+      font-size: 1.1rem; color: var(--blue-dark);
+      margin-bottom: 1.1rem; padding-bottom: .5rem;
+      border-bottom: 2px solid var(--blue-light);
+    }
+    .info-tbl { width: 100%; border-collapse: collapse; }
+    .info-tbl tr { border-bottom: 1px solid #e8e8e8; }
+    .info-tbl td { padding: .75rem 0; font-size: .93rem; vertical-align: top; }
+    .info-tbl td:first-child {
+      font-family: Arial, sans-serif; font-weight: bold;
+      color: var(--blue-dark); font-size: .82rem; width: 42%;
+    }
+
+    .grade-list { list-style: none; }
+    .grade-list li {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: .7rem 0; border-bottom: 1px solid #e8e8e8; font-size: .93rem;
+    }
+    .grade-list li:last-child { border-bottom: none; }
+    .pct {
+      background: var(--blue-dark); color: #fff;
+      padding: .2rem .7rem; border-radius: 12px;
+      font-family: Arial, sans-serif; font-size: .75rem; font-weight: bold;
+    }
+
+    .outcome-list { list-style: none; }
+    .outcome-list li {
+      display: flex; gap: .7rem; align-items: flex-start;
+      padding: .55rem 0; border-bottom: 1px solid #e8e8e8; font-size: .9rem;
+    }
+    .outcome-list li:last-child { border-bottom: none; }
+    .outcome-list li span.ck { color: var(--red); flex-shrink: 0; font-weight: bold; }
+
+    .req-book { padding: .85rem 0; border-bottom: 1px solid #e8e8e8; }
+    .req-book:last-child { border-bottom: none; }
+    .req-book strong { font-size: .93rem; }
+    .req-book em { font-size: .92rem; color: var(--gray); }
+    .isbn { font-family: Arial, sans-serif; font-size: .75rem; color: #999; }
+
+    /* ── INSTRUCTOR ─────────────────────────────────── */
+    .instructor-wrap { text-align: center; }
+    .instr-card {
+      display: inline-block; text-align: left; max-width: 620px; width: 100%;
+      background: #fff; border-radius: 20px; padding: 3rem 2.5rem;
+      box-shadow: 0 8px 40px rgba(0,0,0,.1); border-top: 5px solid var(--blue-dark);
+    }
+    .instr-avatar {
+      width: 90px; height: 90px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue-dark), var(--blue-mid));
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 2rem; font-weight: bold;
+      margin: 0 auto 1.4rem;
+    }
+    .instr-card h3 { text-align: center; font-size: 1.55rem; margin-bottom: .3rem; }
+    .instr-title {
+      text-align: center; font-family: Arial, sans-serif; font-size: .78rem;
+      letter-spacing: 1px; color: var(--gray); text-transform: uppercase; margin-bottom: 1.5rem;
+    }
+    .instr-card p { font-size: .95rem; color: #444; margin-bottom: .9rem; }
+    .contact-row {
+      display: flex; flex-wrap: wrap; gap: .7rem; justify-content: center; margin-top: 1.5rem;
+    }
+    .c-pill {
+      background: var(--off-white); border: 1px solid #ddd;
+      padding: .45rem 1.1rem; border-radius: 20px;
+      font-size: .82rem; font-family: Arial, sans-serif; color: var(--blue-dark);
+      text-decoration: none; transition: all .2s;
+    }
+    .c-pill:hover { background: var(--blue-dark); color: #fff; border-color: var(--blue-dark); }
+
+    /* ── FINAL CTA ──────────────────────────────────── */
+    .final-cta {
+      background: var(--red); color: #fff; padding: 5.5rem 2rem; text-align: center;
+    }
+    .final-cta h2 { font-size: clamp(1.8rem, 3.5vw, 2.6rem); margin-bottom: 1rem; }
+    .final-cta p { font-size: 1.05rem; opacity: .9; max-width: 600px; margin: 0 auto 2rem; }
+    .final-cta small { display: block; margin-top: 1.2rem; opacity: .75; font-family: Arial, sans-serif; font-size: .83rem; }
+    .final-cta small a { color: #fff; }
+
+    /* ── FOOTER ─────────────────────────────────────── */
+    footer {
+      background: var(--blue-dark); color: rgba(255,255,255,.55);
+      padding: 2rem; text-align: center;
+      font-family: Arial, sans-serif; font-size: .78rem; line-height: 2;
+    }
+    footer a { color: var(--blue-light); }
+    .footer-brand { font-size: .95rem; font-weight: bold; color: rgba(255,255,255,.85); margin-bottom: .3rem; }
+    .footer-brand span { color: var(--blue-light); }
+
+    /* ── RESPONSIVE ─────────────────────────────────── */
+    @media (max-width: 900px) {
+      .about-grid, .details-grid  { grid-template-columns: 1fr; }
+      .features-grid               { grid-template-columns: repeat(2,1fr); }
+      .quotes-grid                 { grid-template-columns: 1fr; }
+      .topics-grid                 { grid-template-columns: 1fr; }
+      nav ul                       { display: none; }
+    }
+    @media (max-width: 600px) {
+      .features-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ NAV ══════════════════════════════════════════════ -->
+<nav>
+  <div class="nav-brand"><span>GERM/JWST</span> 556 &nbsp;·&nbsp; UNC Chapel Hill</div>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#thinkers">Thinkers</a></li>
+    <li><a href="#why">Why Enroll</a></li>
+    <li><a href="#topics">Topics</a></li>
+    <li><a href="#students">Students Say</a></li>
+    <li><a href="#details">Details</a></li>
+    <li><a href="#enroll">Enroll</a></li>
+  </ul>
+</nav>
+
+<!-- ══ HERO ══════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="semester-badge">Fall 2026 &nbsp;·&nbsp; UNC Chapel Hill</div>
+  <p class="hero-code">GERM / JWST 556</p>
+  <h1><em>Language Remains:</em><br>Exploring the German-Jewish Dialogue</h1>
+  <p class="hero-sub">3 Credit Hours &nbsp;·&nbsp; Taught in English &nbsp;·&nbsp; No Prerequisites</p>
+
+  <blockquote class="hero-quote">
+    "What remains? The language remains."
+    <cite>— Hannah Arendt, interview with Günter Gaus (a text studied in this course)</cite>
+  </blockquote>
+
+  <div class="meta-strip">
+    <div class="meta-chip"><span class="lbl">Semester</span><span class="val">Fall 2026</span></div>
+    <div class="meta-chip"><span class="lbl">Days &amp; Time</span><span class="val">MWF &nbsp;9:05 – 9:55 AM</span></div>
+    <div class="meta-chip"><span class="lbl">Location</span><span class="val">TBA</span></div>
+    <div class="meta-chip"><span class="lbl">Prerequisites</span><span class="val" style="color:#5dca8a;">None</span></div>
+    <div class="meta-chip"><span class="lbl">Fulfills</span><span class="val">FC-AESTH or FC-POWER</span></div>
+    <div class="meta-chip"><span class="lbl">Cross-listed</span><span class="val">Same as JWST 556</span></div>
+  </div>
+
+  <div class="cta-row">
+    <a href="#enroll" class="btn btn-red">Enroll Now</a>
+    <a href="#about"  class="btn btn-outline">Learn More ↓</a>
+  </div>
+</section>
+
+<!-- ══ AUTHORS ════════════════════════════════════════════ -->
+<section class="authors-wrap" id="thinkers">
+  <h2>Thinkers &amp; Writers You Will Encounter</h2>
+  <div class="authors-grid">
+    <div class="author-card">
+      <div class="a-avatar">H</div>
+      <div class="a-name">Heinrich Heine</div>
+      <div class="a-dates">1797 – 1856</div>
+    </div>
+    <div class="author-card">
+      <div class="a-avatar">F</div>
+      <div class="a-name">Franz Kafka</div>
+      <div class="a-dates">1883 – 1924</div>
+    </div>
+    <div class="author-card">
+      <div class="a-avatar">H</div>
+      <div class="a-name">Hannah Arendt</div>
+      <div class="a-dates">1906 – 1975</div>
+    </div>
+    <div class="author-card">
+      <div class="a-avatar">E</div>
+      <div class="a-name">Elsa Lasker-Schüler</div>
+      <div class="a-dates">1869 – 1945</div>
+    </div>
+    <div class="author-card">
+      <div class="a-avatar">P</div>
+      <div class="a-name">Paul Celan</div>
+      <div class="a-dates">1920 – 1970</div>
+    </div>
+    <div class="author-card">
+      <div class="a-avatar">W</div>
+      <div class="a-name">Walter Benjamin</div>
+      <div class="a-dates">1892 – 1940</div>
+    </div>
+    <div class="author-card">
+      <div class="a-avatar">G</div>
+      <div class="a-name">Gershom Scholem</div>
+      <div class="a-dates">1897 – 1982</div>
+    </div>
+    <div class="author-card">
+      <div class="a-avatar">N</div>
+      <div class="a-name">Nelly Sachs</div>
+      <div class="a-dates">1891 – 1970</div>
+    </div>
+    <div class="author-card">
+      <div class="a-avatar">O</div>
+      <div class="a-name">Olga Grjasnova</div>
+      <div class="a-dates">b. 1984</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ABOUT ══════════════════════════════════════════════ -->
+<section class="section" id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-text">
+        <p class="eyebrow">About the Course</p>
+        <h2 class="section-h">An Extraordinary Intellectual &amp; Literary Legacy</h2>
+        <div class="divider"></div>
+        <p>In this course, we investigate the unique situation of German-speaking Jews by concentrating on the extraordinary intellectual and literary legacy of the <strong>"German-Jewish dialogue"</strong> before and after the Holocaust.</p>
+        <p>In our close reading of a variety of texts this dialogue has yielded, we pay attention to the role of the German language as this dialogue's medium — and to the ways in which German-Jewish writing challenged its boundaries by attempting what Franz Kafka called an <em>"assault on all frontiers of language."</em></p>
+        <p>We explore questions of belonging and difference and how these themes are expressed through the use of the German language by Jewish writers and thinkers. We study some of the greatest practitioners of German writing, from Heine to Kafka to Arendt to Celan, and focus on the way in which these writers reflected on their relation to the German language as European Others.</p>
+        <p>We further consider various theories of language and translation born of the encounter between Germans and Jews, and conclude with autobiographical accounts of Jewish writers who chose to reclaim the German language as their own after 1945.</p>
+        <p style="margin-top:1.5rem;">
+          <span class="pill pill-green">No Prerequisites</span>
+          <span class="pill pill-blue">Taught in English</span>
+          <span class="pill pill-mid">3 Credit Hours</span>
+          <span class="pill" style="background:var(--red);color:#fff;">FC-AESTH / FC-POWER</span>
+        </p>
+      </div>
+
+      <div class="dark-box">
+        <h3>What You Will Study</h3>
+        <ul>
+          <li>The German-Jewish dialogue from the Enlightenment to the present day</li>
+          <li>Literary, philosophical, and autobiographical texts by German-Jewish writers</li>
+          <li>Questions of belonging, difference, and identity through language</li>
+          <li>The concept of <em>minor literature</em> (Deleuze &amp; Guattari)</li>
+          <li>Language and violence under the Third Reich (Klemperer)</li>
+          <li>Poetry after Auschwitz — Celan's <em>Todesfuge</em> and Nelly Sachs</li>
+          <li>Writing history after the Holocaust</li>
+          <li>Jewish writers reclaiming German after 1945</li>
+          <li>The power of multilingualism in contemporary fiction</li>
+          <li>Connections between historical minority experience and today</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ WHY TAKE THIS COURSE ════════════════════════════════ -->
+<section class="section features-bg" id="why">
+  <div class="section-inner">
+    <p class="eyebrow" style="text-align:center;">Why Enroll?</p>
+    <h2 class="section-h" style="text-align:center;">Six Reasons to Take This Course</h2>
+    <div class="divider" style="margin:0 auto 1rem;"></div>
+    <div class="features-grid">
+      <div class="feat">
+        <div class="feat-icon">🌐</div>
+        <h3>No Language Barrier</h3>
+        <p>All readings and discussions are in English. No knowledge of German, Yiddish, or Hebrew is required to thrive in this course.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">🗣️</div>
+        <h3>Discussion-Based Seminar</h3>
+        <p>This is not a passive lecture. You'll engage in lively, collaborative discussions that sharpen your critical and analytical voice.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">✍️</div>
+        <h3>Towering Writers &amp; Thinkers</h3>
+        <p>Spend a semester with Kafka, Arendt, Benjamin, Heine, Celan — some of the most celebrated and consequential minds of modernity.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">🌍</div>
+        <h3>Urgent, Timeless Questions</h3>
+        <p>Belonging, exclusion, language, power, and minority identity — these themes resonate far beyond the historical contexts in which they arose.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">🎓</div>
+        <h3>Satisfies Two Foundations</h3>
+        <p>Counts toward <strong>FC-AESTH</strong> (Aesthetic &amp; Interpretive Analysis) <em>or</em> <strong>FC-POWER</strong> (Power, Difference &amp; Inequality) — your choice.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">⭐</div>
+        <h3>An Exceptional Instructor</h3>
+        <p>Students describe Dr. Nester as brilliant, warm, and deeply inspiring — with a "mesmerizing way of explaining heavy topics."</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TOPICS ═════════════════════════════════════════════ -->
+<section class="section" id="topics">
+  <div class="section-inner">
+    <p class="eyebrow">Course Schedule</p>
+    <h2 class="section-h">A Semester-Long Journey Through Language &amp; History</h2>
+    <div class="divider"></div>
+    <div class="topics-grid">
+      <div class="topic"><span class="t-num">01</span><span class="t-name">The German-Jewish Dialogue: An Ongoing Conversation?</span></div>
+      <div class="topic"><span class="t-num">02</span><span class="t-name">Beginning of a Dialogue: Integration &amp; Assimilation (Dohm)</span></div>
+      <div class="topic"><span class="t-num">03</span><span class="t-name">Lessing's <em>Nathan the Wise</em> — a vision of tolerance</span></div>
+      <div class="topic"><span class="t-num">04</span><span class="t-name">Assimilation &amp; Acculturation (Sorkin)</span></div>
+      <div class="topic"><span class="t-num">05</span><span class="t-name">Assessing the Dialogue: Scholem vs. Arendt</span></div>
+      <div class="topic"><span class="t-num">06</span><span class="t-name">German Jews Between Two Worlds (Kompert)</span></div>
+      <div class="topic"><span class="t-num">07</span><span class="t-name">The Hebraic Past: Heine, Lasker-Schüler</span></div>
+      <div class="topic"><span class="t-num">08</span><span class="t-name">Antisemitism, Jews &amp; Creative Expression (Wagner)</span></div>
+      <div class="topic"><span class="t-num">09</span><span class="t-name">A Language in Crisis: Kafka's prose and lectures</span></div>
+      <div class="topic"><span class="t-num">10</span><span class="t-name">German-Jewish Literature as Minor Literature? (Deleuze &amp; Guattari)</span></div>
+      <div class="topic"><span class="t-num">11</span><span class="t-name">Crisis of Language: Hofmannsthal &amp; Walter Benjamin</span></div>
+      <div class="topic"><span class="t-num">12</span><span class="t-name">Language &amp; Violence: Klemperer and the Third Reich</span></div>
+      <div class="topic"><span class="t-num">13</span><span class="t-name">Poetry After Auschwitz: Celan's <em>Todesfuge</em>, Nelly Sachs</span></div>
+      <div class="topic"><span class="t-num">14</span><span class="t-name">Writing History after the Holocaust (Broszat-Friedländer)</span></div>
+      <div class="topic"><span class="t-num">15</span><span class="t-name">Reclaiming German: Honigmann, Max Biller</span></div>
+      <div class="topic"><span class="t-num">16</span><span class="t-name">The Power of Multilingualism: Grjasnova</span></div>
+      <div class="topic"><span class="t-num">17</span><span class="t-name">Poetry &amp; Jewish Revenge: Max Czollek</span></div>
+      
+    </div>
+  </div>
+</section>
+
+<!-- ══ TESTIMONIALS ════════════════════════════════════════ -->
+<section class="testimonials-bg" id="students">
+  <div class="section-inner" style="text-align:center;">
+    <p class="eyebrow">Student Voices</p>
+    <h2 class="section-h">What Students Are Saying</h2>
+    <div class="divider" style="margin:0 auto 1rem;"></div>
+    <p class="t-sub">Drawn from official UNC course evaluations</p>
+  </div>
+  <div class="quotes-grid">
+    <div class="q-card">
+      <blockquote>"Dr. Nester provided, with great care and detail, a presentation of the German–Jewish dialogue from numerous perspectives throughout a significant historical time span. She often encouraged us to interact with a text beyond our initial understandings. Her PowerPoints were a fantastic resource and I appreciated the opportunity to learn from her perspective on each topic."</blockquote>
+      <p class="q-source">— UNC Student, Course Evaluation</p>
+    </div>
+    <div class="q-card">
+      <blockquote>"Dr. Nester was, as always, an incredible guide for this semester. She balances leading discussion and providing background, while allowing us to discuss and respond to questions on our own. She never makes students feel small for not knowing things and enjoys teaching about topics her students don't already know. I have had a great time in her class."</blockquote>
+      <p class="q-source">— UNC Student, Course Evaluation</p>
+    </div>
+    <div class="q-card">
+      <blockquote>"This class was very engaging. The readings all tied together history, notable German authors, and themes of German–Jewish identity. In each class, we analyzed in depth the reading and had productive class discussions. Dr. Nester has a mesmerizing way of explaining heavy topics."</blockquote>
+      <p class="q-source">— UNC Student, Course Evaluation</p>
+    </div>
+    <div class="q-card">
+      <blockquote>"Dr. Nester challenged us to think critically about the material, far beyond any surface level interpretation. She encouraged us to draw connections across different works and authors, gave opportunities for partner work, and was always willing to clarify texts if we needed it."</blockquote>
+      <p class="q-source">— UNC Student, Course Evaluation</p>
+    </div>
+    <div class="q-card">
+      <blockquote>"I appreciated every aspect of the course and I think it was intentionally designed."</blockquote>
+      <p class="q-source">— UNC Student, Course Evaluation</p>
+    </div>
+    <div class="q-card">
+      <blockquote>"I think everything should be kept for this class. The workload was fair and all the assignments served a good purpose — there wasn't really any busy work."</blockquote>
+      <p class="q-source">— UNC Student, Course Evaluation</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ COURSE DETAILS ══════════════════════════════════════ -->
+<section class="section features-bg" id="details">
+  <div class="section-inner">
+    <p class="eyebrow">Course Details</p>
+    <h2 class="section-h">Everything You Need to Know</h2>
+    <div class="divider"></div>
+    <div class="details-grid">
+
+      <!-- Info table -->
+      <div class="d-block">
+        <h3>📋 Course Information</h3>
+        <table class="info-tbl">
+          <tr><td>Course Number</td><td>GERM 556 / JWST 556</td></tr>
+          <tr><td>Credit Hours</td><td>3</td></tr>
+          <tr><td>Days &amp; Time</td><td>MWF &nbsp; 9:05 – 9:55 AM</td></tr>
+          <tr><td>Location</td><td>Graham Memorial, Room 35</td></tr>
+          <tr><td>Prerequisites</td><td><span class="pill pill-green" style="font-size:.72rem;">None</span></td></tr>
+          <tr><td>Language of Instruction</td><td>Entirely in English</td></tr>
+          <tr><td>Foundations Credit</td><td>FC-AESTH <em>or</em> FC-POWER</td></tr>
+          <tr><td>Category</td><td>Theories course</td></tr>
+          <tr><td>Office Hours</td><td>TBA or Zoom by appt.</td></tr>
+          <tr><td>Canvas Site</td><td><a href="https://uncch.instructure.com/courses/77663" style="color:var(--blue-mid);">Course Canvas Page</a></td></tr>
+        </table>
+      </div>
+
+      <!-- Grade breakdown -->
+      <div class="d-block">
+        <h3>📊 Grade Breakdown</h3>
+        <ul class="grade-list">
+          <li><span>Homework Writing Assignments</span><span class="pct">20%</span></li>
+          <li><span>In-Class Presentation</span><span class="pct">15%</span></li>
+          <li><span>Midterm Exam</span><span class="pct">25%</span></li>
+          <li><span>Final Exam</span><span class="pct">25%</span></li>
+          <li><span>Attendance &amp; Participation</span><span class="pct">15%</span></li>
+        </ul>
+      </div>
+
+      <!-- Required texts -->
+      <div class="d-block">
+        <h3>📚 Required Texts</h3>
+        <p style="font-size:.85rem;color:var(--gray);margin-bottom:.8rem;">Available at UNC Student Stores. All other materials on Canvas.</p>
+        <div class="req-book">
+          <strong>Gotthold Ephraim Lessing</strong><br>
+          <em>Nathan the Wise with Related Documents</em><br>
+          <span class="isbn">ISBN 9780312442439</span>
+        </div>
+        <div class="req-book">
+          <strong>Olga Grjasnova</strong><br>
+          <em>All Russians Love Birch Trees</em><br>
+          <span class="isbn">ISBN 9781590515846</span>
+        </div>
+      </div>
+
+      <!-- Learning outcomes -->
+      <div class="d-block">
+        <h3>🎯 Learning Outcomes</h3>
+        <ul class="outcome-list">
+          <li><span class="ck">✓</span> Interpret and critique literary and artistic expression</li>
+          <li><span class="ck">✓</span> Analyze works in social, political, and historical contexts</li>
+          <li><span class="ck">✓</span> Explain how aesthetic expression enhances human experience</li>
+          <li><span class="ck">✓</span> Recognize the relationship between inequality and power</li>
+          <li><span class="ck">✓</span> Analyze configurations of power and forms of bias</li>
+          <li><span class="ck">✓</span> Connect historical minority experience to the present day</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ INSTRUCTOR ══════════════════════════════════════════ -->
+<section class="section instructor-wrap" id="instructor">
+  <p class="eyebrow" style="text-align:center;">Your Instructor</p>
+  <h2 class="section-h" style="text-align:center;">Meet Dr. Adi Nester</h2>
+  <div class="divider" style="margin:0 auto 2.5rem;"></div>
+  <div class="instr-card">
+    <div class="instr-avatar">AN</div>
+    <h3>Dr. Adi Nester</h3>
+    <p class="instr-title">Department of Germanic &amp; Slavic Languages &amp; Literatures &nbsp;·&nbsp; UNC Chapel Hill</p>
+    <p>Dr. Nester is a specialist in German-Jewish literature, philosophy, and cultural history. Her seminars are celebrated for their intellectual depth, their warmth, and the genuine passion she brings to every text and discussion.</p>
+    <p>Students consistently describe her as one of the most memorable instructors they have encountered — deeply knowledgeable, encouraging of every voice in the room, and gifted at guiding students through complex material without ever making them feel intimidated.</p>
+    <div class="contact-row">
+      <a href="mailto:adines@unc.edu" class="c-pill">✉ adines@unc.edu</a>
+      <span class="c-pill">🏛 Dey Hall 442</span>
+      <span class="c-pill">🕑 Office Hours: TBA</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FINAL CTA ════════════════════════════════════════════ -->
+<section class="final-cta" id="enroll">
+  <h2>Ready to Explore Language, Identity &amp; History?</h2>
+  <p>Enroll in GERM/JWST 556 this Fall 2026 and join a conversation that has been centuries in the making. No prerequisites. Open to all students. Taught entirely in English.</p>
+  <a href="https://connectcarolina.unc.edu" class="btn btn-white">Enroll via ConnectCarolina →</a>
+  <small>Questions? Reach Dr. Nester at <a href="mailto:adines@unc.edu">adines@unc.edu</a></small>
+</section>
+
+<!-- ══ FOOTER ══════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-brand"><span>germanic</span>Slavic &nbsp;·&nbsp; University of North Carolina at Chapel Hill</div>
+  <div>GERM/JWST 556 &nbsp;·&nbsp; Language Remains: Exploring the German-Jewish Dialogue &nbsp;·&nbsp; Fall 2026</div>
+  <div>Department of Germanic &amp; Slavic Languages &amp; Literatures &nbsp;·&nbsp;
+    <a href="https://uncch.instructure.com/courses/77663">Canvas Site</a>
+  </div>
+</footer>
+
+</body>
+</html>
